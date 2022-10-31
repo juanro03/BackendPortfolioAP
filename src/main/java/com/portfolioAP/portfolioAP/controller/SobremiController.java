@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://portfolioap-auth.web.app")
+@RequestMapping("/sobremi")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SobremiController {
     @Autowired SobremiService sobremiService;
     
@@ -27,7 +27,7 @@ public class SobremiController {
         this.sobremiService = sobremiService;
     }
     
-    @GetMapping("/sobremi/detail/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Sobremi> getById(@PathVariable("id") Long id){
         if(!sobremiService.existsById(id)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -37,7 +37,7 @@ public class SobremiController {
         return new ResponseEntity(sobremi,HttpStatus.OK);
     }
     
-    @PutMapping("/sobremi/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> editSobremi(@PathVariable("id") Long id, @RequestBody dtoSobremi dtoSobremi){
         if(!sobremiService.existsById(id))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -50,20 +50,20 @@ public class SobremiController {
         
     }
     
-    @GetMapping("/sobremi/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Sobremi>> obtenerSobremi(){
         List<Sobremi> sobremis= sobremiService.list();
         return new ResponseEntity<>(sobremis, HttpStatus.OK);
     }
          
-    @PostMapping("/sobremi/add")
+    @PostMapping("/add")
     public ResponseEntity<Sobremi> addSobremi(@RequestBody dtoSobremi dtoSobremi){
         Sobremi nuevaSobremi=new Sobremi(dtoSobremi.getDescSobremi());
         sobremiService.addSobremi(nuevaSobremi);
         return new ResponseEntity<>(nuevaSobremi,HttpStatus.CREATED);
     }
     
-    @DeleteMapping("/sobremi/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteSobremi(@PathVariable("id") Long id){
         sobremiService.deleteSobremi(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://portfolioap-auth.web.app")
+@RequestMapping("/experiencia")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ExperienciaController {
     @Autowired ExperienciaService experienciaService;
 
@@ -27,7 +27,7 @@ public class ExperienciaController {
         this.experienciaService = experienciaService;
     }
 
-    @GetMapping("/experiencia/detail/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Experiencia> getById(@PathVariable("id") Long id) {
         if (!experienciaService.existsById(id)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -37,7 +37,7 @@ public class ExperienciaController {
         return new ResponseEntity(experiencia, HttpStatus.OK);
     }
 
-    @PutMapping("/experiencia/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> editExperiencia(@PathVariable("id") Long id, @RequestBody dtoExperiencia dtoEdu) {
         if (!experienciaService.existsById(id)) {
             return new ResponseEntity(("El id no existe."), HttpStatus.BAD_REQUEST);
@@ -50,20 +50,20 @@ public class ExperienciaController {
         return new ResponseEntity(experiencia, HttpStatus.OK);
     }
 
-    @GetMapping("/experiencia/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Experiencia>> obtenerExperiencia() {
         List<Experiencia> experiencias = experienciaService.list();
         return new ResponseEntity<>(experiencias, HttpStatus.OK);
     }
 
-    @PostMapping("/experiencia/add")
+    @PostMapping("/add")
     public ResponseEntity<Experiencia> addExperiencia(@RequestBody dtoExperiencia dtoExp) {
         Experiencia nuevaExperiencia = new Experiencia(dtoExp.getDescExp());
         experienciaService.addExperiencia(nuevaExperiencia);
         return new ResponseEntity<>(nuevaExperiencia, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/experiencia/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteExperiencia(@PathVariable("id") Long id) {
         experienciaService.deleteExperiencia(id);
         return new ResponseEntity<>(HttpStatus.OK);

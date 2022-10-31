@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "https://portfolioap-auth.web.app")
+@RequestMapping("/educacion")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EducacionController {
     @Autowired EducacionService educacionService;
     
@@ -27,7 +27,7 @@ public class EducacionController {
         this.educacionService = educacionService;
     }
     
-    @GetMapping("/educacion/detail/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Educacion> getById(@PathVariable("id") Long id){
         if(!educacionService.existsById(id)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -37,7 +37,7 @@ public class EducacionController {
         return new ResponseEntity(educacion,HttpStatus.OK);
     }
     
-    @PutMapping("/educacionupdate/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> editEducacion(@PathVariable("id") Long id, @RequestBody dtoEducacion dtoEdu){
         if(!educacionService.existsById(id))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -50,20 +50,20 @@ public class EducacionController {
         
     }
     
-    @GetMapping("/educacion/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Educacion>> obtenerEducacion(){
         List<Educacion> educaciones= educacionService.list();
         return new ResponseEntity<>(educaciones, HttpStatus.OK);
     }
     
-    @PostMapping("/educacion/add")
+    @PostMapping("/add")
     public ResponseEntity<Educacion> addEducacion(@RequestBody dtoEducacion dtoEdu){
         Educacion nuevaEducacion=new Educacion(dtoEdu.getDescEdu());
         educacionService.addEducacion(nuevaEducacion);
         return new ResponseEntity<>(nuevaEducacion,HttpStatus.CREATED);
     }
     
-    @DeleteMapping("/educacion/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEducacion(@PathVariable("id") Long id){
         educacionService.deleteEducacion(id);
         return new ResponseEntity<>(HttpStatus.OK);
