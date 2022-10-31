@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/skill")
+
+//@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "https://portfolioap-auth.web.app")
 public class SkillController {
     @Autowired SkillService skillService;
@@ -28,7 +29,7 @@ public class SkillController {
         this.skillService = skillService;
     }
     
-    @GetMapping("/detail/{id}")
+    @GetMapping("/skill/detail/{id}")
     public ResponseEntity<Skill> getById(@PathVariable("id") Long id){
         if(!skillService.existsById(id)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -38,7 +39,7 @@ public class SkillController {
         return new ResponseEntity(skill,HttpStatus.OK);
     }
     
-    @PutMapping("/update/{id}")
+    @PutMapping("/skill/update/{id}")
     public ResponseEntity<?> editSkill(@PathVariable("id") Long id, @RequestBody dtoSkill dtoSkill){
         if(!skillService.existsById(id))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -52,13 +53,13 @@ public class SkillController {
         
     }
     
-    @GetMapping("/all")
+    @GetMapping("/skill/all")
     public ResponseEntity<List<Skill>> obtenerSkills(){
         List<Skill> skills= skillService.list();
         return new ResponseEntity<>(skills, HttpStatus.OK);
     }
     
-    @PostMapping("/add")
+    @PostMapping("/skill/add")
     public ResponseEntity<Skill> addSkill(@RequestBody dtoSkill dtoSkill){
         Skill nuevaSkill=new Skill(dtoSkill.getNombre(), dtoSkill.getPorcentaje());
         
@@ -66,7 +67,7 @@ public class SkillController {
         return new ResponseEntity<>(nuevaSkill,HttpStatus.CREATED);
     }
     
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/skill/delete/{id}")
     public ResponseEntity<?> deleteSkill(@PathVariable("id") Long id){
         skillService.deleteSkill(id);
         return new ResponseEntity<>(HttpStatus.OK);

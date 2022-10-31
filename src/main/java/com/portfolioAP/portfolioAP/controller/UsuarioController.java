@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/usuario")
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "https://portfolioap-auth.web.app")
 public class UsuarioController{
@@ -28,13 +27,13 @@ public class UsuarioController{
         this.usuarioService = usuarioService;
     }
     
-    @GetMapping("/all")
+    @GetMapping("/usuario/all")
     public ResponseEntity<List<Usuario>> obtenerUsuario(){
         List<Usuario> usuarios= usuarioService.list();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
     
-    @GetMapping("/detail/{id}")
+    @GetMapping("/usuario/detail/{id}")
     public ResponseEntity<Usuario> getById(@PathVariable("id") int id){
         if(!usuarioService.existsById(id)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -44,7 +43,7 @@ public class UsuarioController{
         return new ResponseEntity(usuario,HttpStatus.OK);
     }
     
-    @PutMapping("update/{id}")
+    @PutMapping("/usuario/update/{id}")
     public ResponseEntity<?> editUsuario(@PathVariable("id") int id, @RequestBody dtoUsuario dtousuario){
         
         if(!usuarioService.existsById(id))

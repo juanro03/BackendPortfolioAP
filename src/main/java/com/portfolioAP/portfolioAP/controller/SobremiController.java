@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sobremi")
 //@CrossOrigin(origins = "http://localhost:4200")
 @CrossOrigin(origins = "https://portfolioap-auth.web.app")
 public class SobremiController {
@@ -28,7 +27,7 @@ public class SobremiController {
         this.sobremiService = sobremiService;
     }
     
-    @GetMapping("/detail/{id}")
+    @GetMapping("/sobremi/detail/{id}")
     public ResponseEntity<Sobremi> getById(@PathVariable("id") Long id){
         if(!sobremiService.existsById(id)){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -38,7 +37,7 @@ public class SobremiController {
         return new ResponseEntity(sobremi,HttpStatus.OK);
     }
     
-    @PutMapping("/update/{id}")
+    @PutMapping("/sobremi/update/{id}")
     public ResponseEntity<?> editSobremi(@PathVariable("id") Long id, @RequestBody dtoSobremi dtoSobremi){
         if(!sobremiService.existsById(id))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -51,20 +50,20 @@ public class SobremiController {
         
     }
     
-    @GetMapping("/all")
+    @GetMapping("/sobremi/all")
     public ResponseEntity<List<Sobremi>> obtenerSobremi(){
         List<Sobremi> sobremis= sobremiService.list();
         return new ResponseEntity<>(sobremis, HttpStatus.OK);
     }
          
-    @PostMapping("/add")
+    @PostMapping("/sobremi/add")
     public ResponseEntity<Sobremi> addSobremi(@RequestBody dtoSobremi dtoSobremi){
         Sobremi nuevaSobremi=new Sobremi(dtoSobremi.getDescSobremi());
         sobremiService.addSobremi(nuevaSobremi);
         return new ResponseEntity<>(nuevaSobremi,HttpStatus.CREATED);
     }
     
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/sobremi/delete/{id}")
     public ResponseEntity<?> deleteSobremi(@PathVariable("id") Long id){
         sobremiService.deleteSobremi(id);
         return new ResponseEntity<>(HttpStatus.OK);
